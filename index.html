@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Fireworks Elegant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a2b0c;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+        .text-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+        }
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 72px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #ffecd2, #fcb69f, #ffecd2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(255, 223, 186, 0.8), 0 0 60px rgba(255, 193, 133, 0.5);
+        }
+        h1.line1 {
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+            animation-delay: 0s;
+        }
+        h1.line2 {
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+            animation-delay: 1s;
+        }
+        h2 {
+            font-size: 32px;
+            margin: 15px 0;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+            animation-delay: 2s;
+        }
+        p {
+            font-size: 22px;
+            margin-top: 10px;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+            animation-delay: 3s;
+        }
+        .button-group {
+            margin-top: 35px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+            animation-delay: 4s;
+        }
+        button {
+            padding: 14px 34px;
+            font-size: 20px;
+            background-color: #6bbf59;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            color: white;
+            transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        button:hover {
+            background-color: #5ca94c;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(107, 191, 89, 0.6);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="text-container">
+        <h1 class="line1">Happy Birthday</h1>
+        <h1 class="line2">My Favorite Person</h1>
+        <h2>May your smile shine always 😊</h2>
+        <p>Dan semangat terus untuk HB Cup! 💪</p>
+        <div class="button-group">
+            <button onclick="window.location.href='surat.html'">Buka Surat 📜</button>
+            <button onclick="window.location.href='desain.html'">Dibuka ya! 🎁</button>
+            <button onclick="window.location.href='locket.html'">Your Locket 💖</button>
+        </div>
+    </div>
+    <canvas id="fireworks"></canvas>
+
+    <script>
+        const canvas = document.getElementById('fireworks');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor(x, y, color, vx, vy, life) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.vx = vx;
+                this.vy = vy;
+                this.life = life;
+                this.alpha = 1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += 0.02;
+                this.alpha -= 0.01;
+            }
+            draw() {
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        function createFirework() {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * (canvas.height / 2);
+            const color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+            for (let i = 0; i < 60; i++) {
+                const angle = Math.random() * 2 * Math.PI;
+                const speed = Math.random() * 5 + 1;
+                const vx = Math.cos(angle) * speed;
+                const vy = Math.sin(angle) * speed;
+                particles.push(new Particle(x, y, color, vx, vy, 100));
+            }
+        }
+
+        function animateFireworks() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (Math.random() < 0.08) {
+                createFirework();
+            }
+            particles.forEach((p, i) => {
+                p.update();
+                p.draw();
+                if (p.alpha <= 0) {
+                    particles.splice(i, 1);
+                }
+            });
+            requestAnimationFrame(animateFireworks);
+        }
+
+        animateFireworks();
+    </script>
+</body>
+</html>

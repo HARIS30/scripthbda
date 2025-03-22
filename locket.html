@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Locket</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: center;
+            background-color: #1a2b0c;
+            overflow-y: scroll;
+            scrollbar-width: none; /* untuk Firefox */
+        }
+
+        body::-webkit-scrollbar {
+            display: none; /* untuk Chrome, Safari, dan Edge */
+        }
+
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.6;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4);
+            animation: twinkle 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.4); }
+            100% { opacity: 0.2; transform: scale(0.8); }
+        }
+
+        .locket-container {
+            z-index: 1;
+            max-width: 700px;
+            background-color: rgba(0, 0, 0, 0.55);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
+            margin-top: 60px;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 64px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #ffecd2, #fcb69f, #ffecd2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 25px rgba(255, 193, 133, 0.8);
+        }
+
+        p {
+            font-size: 22px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            color: white;
+            text-shadow: 0 0 12px rgba(0,0,0,0.5);
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 20px;
+            margin-bottom: 25px;
+        }
+
+        button {
+            padding: 14px 30px;
+            font-size: 20px;
+            background-color: #6bbf59;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        button:hover {
+            background-color: #5ca94c;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="locket-container">
+        <h1>Your locket makes me happy! </h1><br>
+        <img src="gambar.jpg" alt="Locket Image">
+        <p>Your locket is my happiness ✨</p>
+        <p>
+            Setiap kali melihat locket-mu, rasanya kebahagiaan itu datang dengan sendirinya❤️</p>
+        <p>Tetap semangat, tetap bersinar, dan teruslah bahagia! 🌟</p>
+        <button onclick="window.location.href='index.html'">Kembali ke Halaman Utama</button>
+    </div>
+
+    <script>
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 200; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.animationDuration = `${2 + Math.random() * 4}s`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+            star.style.width = `${1 + Math.random() * 3}px`;
+            star.style.height = star.style.width;
+            starsContainer.appendChild(star);
+        }
+    </script>
+</body>
+</html>
